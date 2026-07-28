@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KIRA Network — Privacy &amp; Permissions</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="brand">
+    <div class="brand-mark">K</div>
+    <div class="brand-name">KIRA Network</div>
+  </div>
+
+  <h1>Privacy &amp; Permissions</h1>
+  <p class="subtitle">
+    Nothing below is requested automatically. Each permission fires only when you press its button, and you can see the live browser response — granted, denied, or pending — right here.
+  </p>
+
+  <div class="status-strip">
+    <span class="live"><span class="live-dot"></span>Live permission monitor</span>
+    <span id="grantedCount">0 / 5 active</span>
+  </div>
+
+  <div class="perm-grid" id="permGrid">
+
+    <!-- Location -->
+    <div class="perm-row" data-key="location" id="row-location">
+      <div class="perm-icon">📍</div>
+      <div class="perm-body">
+        <div class="perm-top">
+          <div class="perm-name">Location</div>
+          <div class="perm-state" id="state-location">Not requested</div>
+        </div>
+        <p class="perm-desc">Used for location-based features inside the platform. Nothing is read until you test it below.</p>
+        <div class="perm-action">
+          <button class="btn-mini" id="btn-location">Request location</button>
+        </div>
+        <div class="perm-detail" id="detail-location"></div>
+      </div>
+    </div>
+
+    <!-- Camera -->
+    <div class="perm-row" data-key="camera" id="row-camera">
+      <div class="perm-icon">📷</div>
+      <div class="perm-body">
+        <div class="perm-top">
+          <div class="perm-name">Camera</div>
+          <div class="perm-state" id="state-camera">Not requested</div>
+        </div>
+        <p class="perm-desc">Only activates for camera-based features you choose to open. The stream is stopped immediately after this test.</p>
+        <div class="perm-action">
+          <button class="btn-mini" id="btn-camera">Request camera</button>
+        </div>
+        <div class="perm-detail" id="detail-camera"></div>
+      </div>
+    </div>
+
+    <!-- Microphone -->
+    <div class="perm-row" data-key="mic" id="row-mic">
+      <div class="perm-icon">🎤</div>
+      <div class="perm-body">
+        <div class="perm-top">
+          <div class="perm-name">Microphone</div>
+          <div class="perm-state" id="state-mic">Not requested</div>
+        </div>
+        <p class="perm-desc">Only activates for voice features you choose to open. The stream is stopped immediately after this test.</p>
+        <div class="perm-action">
+          <button class="btn-mini" id="btn-mic">Request microphone</button>
+        </div>
+        <div class="perm-detail" id="detail-mic"></div>
+      </div>
+    </div>
+
+    <!-- Notifications -->
+    <div class="perm-row" data-key="notif" id="row-notif">
+      <div class="perm-icon">🔔</div>
+      <div class="perm-body">
+        <div class="perm-top">
+          <div class="perm-name">Notifications</div>
+          <div class="perm-state" id="state-notif">Not requested</div>
+        </div>
+        <p class="perm-desc">Used to send account and security updates. You can revoke this any time from your browser's site settings.</p>
+        <div class="perm-action">
+          <button class="btn-mini" id="btn-notif">Request notifications</button>
+        </div>
+        <div class="perm-detail" id="detail-notif"></div>
+      </div>
+    </div>
+
+    <!-- Files -->
+    <div class="perm-row" data-key="files" id="row-files">
+      <div class="perm-icon">📁</div>
+      <div class="perm-body">
+        <div class="perm-top">
+          <div class="perm-name">Files &amp; Photos</div>
+          <div class="perm-state" id="state-files">Not requested</div>
+        </div>
+        <p class="perm-desc">Opens your browser's native file picker. Nothing is accessed until you choose a file yourself.</p>
+        <div class="perm-action">
+          <button class="btn-mini" id="btn-files">Choose a file</button>
+          <input type="file" id="fileInput">
+        </div>
+        <div class="file-name" id="fileName"></div>
+        <div class="perm-detail" id="detail-files"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <div class="agreement">
+    <p>Your data is processed according to the Privacy Policy. You stay in control of every permission above — deny anything optional, or revoke it later in your browser's site settings.</p>
+
+    <div class="check-row">
+      <input type="checkbox" id="c1">
+      <label for="c1">I have read and understood the <a href="#" onclick="return false;">Privacy Policy</a>.</label>
+    </div>
+    <div class="check-row">
+      <input type="checkbox" id="c2">
+      <label for="c2">I understand which permissions the platform may request, and that each is only triggered when I use the related feature.</label>
+    </div>
+    <div class="check-row">
+      <input type="checkbox" id="c3">
+      <label for="c3">I agree to continue using KIRA Network.</label>
+    </div>
+
+    <div class="continue-wrap">
+      <button class="btn-main" id="continueBtn" disabled>Continue</button>
+      <span class="continue-hint" id="continueHint">check all three to continue</span>
+    </div>
+  </div>
+
+  <div class="granted-panel" id="grantedPanel">
+    <div class="granted-note">
+      Account created. Permissions stay off until you actively use a feature — try the buttons above any time to see how each one behaves.
+    </div>
+  </div>
+
+  <p class="footer-note">
+    This is a working test harness: every button above calls the real browser permission API for that capability (Geolocation, getUserMedia, Notification, and the native file picker), so you can see actual granted / denied / dismissed states rather than a mockup.
+  </p>
+
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
